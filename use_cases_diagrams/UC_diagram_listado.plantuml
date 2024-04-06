@@ -1,0 +1,68 @@
+@startuml UC_lista_modulos
+left to right direction
+actor "Usuario" as Usuario
+actor "Autorizado" as UComun
+actor "Invitado" as UInvitado
+actor "Administrador" as UAdmin
+rectangle "Android App" as AA{
+  package "Listado de Módulos"{
+    usecase "Buscar Módulos Disponibles" as UC1
+    usecase "Borrar Módulos Inaccesibles" as UC2
+    usecase "Actualizar el estado de los modulos" as UC3
+    usecase "Solicitar Acceso nuevo Módulo" as UC4
+    usecase "Activar Acceso Rápido" as UC5
+    usecase "Accionar Módulo" as UC6
+    usecase "Calibrar Módulo" as UC7
+  }
+  
+}
+
+rectangle "Firmware Módulo" as FM {
+    usecase "Ejecutar Comando" as UCF1
+    usecase "Accionar" as UCF2
+    usecase "Obtener Nivel de Usuario" as UCF3
+    usecase "Crear Usuario Provisorio" as UCF4
+    usecase "Autorización de comandos" as UCF5
+    usecase "Obtener Estado" as UCF6
+    usecase "Cambiar Estado" as UCF7
+
+}
+
+actor "Módulo" as MOD
+
+AA -[hidden]- FM
+
+UCF1 -- MOD
+UCF5 -- MOD
+
+UCF1 .> UCF5
+UCF2 --|> UCF1
+UCF3 --|> UCF1
+UCF4 --|> UCF1
+UCF6 --|> UCF1
+UCF7 --|> UCF1
+
+UC6 .right.> UCF2
+UC4 .right.> UCF4
+UC4 .right.> UCF3
+UC1 .right.> UCF3
+UC3 .right.> UCF6
+UC7 .right.> UCF7
+UC6 .right.> UCF3
+
+Usuario <|-- UComun
+UComun <|-- UAdmin
+Usuario <|-- UInvitado
+
+Usuario -- UC1
+Usuario -- UC2
+UComun -- UC3
+UAdmin -[hidden]- UC3
+Usuario -- UC5
+
+UInvitado -- UC4
+UComun -- UC6
+UAdmin -[hidden]- UC6
+UAdmin -- UC7
+
+@enduml

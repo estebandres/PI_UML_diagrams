@@ -1,0 +1,71 @@
+@startuml AD_getModuleAndUpdateInfo
+
+partition  <b>getModuleAndUpdateInfo</b> <i>(UUID module_id, String WiFi_SSID)</i> {
+    start
+    repeat
+    fork
+        :get module object \n from local cache;
+    fork again
+        :get module object \n from network scann;
+    end fork 
+    note right: take just the item produced first and delay any errors.
+    if (Module is in AP_MODE  \n  and the phone is NOT connected to it) then (TRUE)
+        #pink : <b>Exception</b> \n Unconnected from \n AP_Mode Module;
+        stop
+    else (NO)
+        : get App User object;
+        #palegreen: <b>RPC</b> get User Level>
+        if() then (ERROR)
+        #pink : <b>Exception</b> \n Communication Error;
+        (E)
+        detach
+        else
+        #yellow: <b>RESP</b> User Level <
+        endif
+        switch()
+        case(\t 200)
+            : User Level ]
+        case(\t 404)
+            if(Module in AP_MODE) then (YES)
+                #palegreen: <b>RPC</b> Create User >
+                if() then (ERROR)
+                    #pink : <b>Exception</b> \n Communication Error;
+                    (E)
+                    detach
+                else
+                    #yellow: <b>RESP</b> User Level <
+                    : User Level ]
+                    
+                endif
+            else (NO)
+            : user level = UNAUTHORIZED;
+                #pink : <b>Exception</b> \n User was deleted;
+                stop
+            endif
+        case(\t 400)
+            #pink : <b>Exception</b> \n Incompatible RPC;
+            stop
+        endswitch
+        : update user level;
+        #palegreen: <b>RPC</b> Get System Info >
+                if() then (ERROR)
+                    #pink : <b>Exception</b> \n Communication Error;
+                    (E)
+                    detach
+                else
+                    #yellow: <b>RESP</b> System Info <
+                endif
+        
+        : update module object data;
+        stop
+    end if
+    (E)
+    note right: A module factory resetting may produce unreachable host or timeouts
+    repeat while(retry_count < 2) is (YES)
+    -> NO;
+    stop
+}
+
+@enduml
+
+-[#blue,dashed]->

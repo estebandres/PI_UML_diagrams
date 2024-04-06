@@ -1,0 +1,69 @@
+@startuml UC_config
+left to right direction
+actor "Autorizado" as UComun
+actor "Administrador" as UAdmin
+rectangle "Android App" as AA{
+  package "Configuración de Módulo"{
+    usecase "Obtener Datos \n del Módulo" as UC1
+
+    usecase "Actualizar Geolocalización" as UC3
+    usecase "Cambiar Alias" as UC4
+
+    usecase "Ingresar Credenciales WiFi" as UC5
+    usecase "Actualizar Firmware" as UC6
+    usecase "Recalibrar" as UC7
+    usecase "Resetear a valores \n de Fábrica" as UC8
+
+    usecase "Activar Acceso Rápido" as UC9
+  }
+  
+}
+
+rectangle "Firmware Módulo" as FM {
+    usecase "Ejecutar Comando" as UCF1
+    usecase "Obtener Nivel de Usuario" as UCF3
+    usecase "Conectar a LAN WiFi" as UCF4
+    usecase "Autorización de comandos" as UCF5
+    usecase "Obtener Estado" as UCF6
+    usecase "Factory Reset" as UCF7
+    usecase "OTA Update" as UCF8
+    usecase "Cambiar Estado" as UCF10
+
+}
+
+actor "Módulo" as MOD
+
+AA -[hidden]- FM
+
+UCF1 -- MOD
+UCF5 -- MOD
+
+UCF1 .> UCF5
+UCF3 --|> UCF1
+UCF4 --|> UCF1
+UCF6 --|> UCF1
+UCF7 --|> UCF1
+UCF8 --|> UCF1
+UCF10 --|> UCF1
+
+UC5 .right.> UCF4
+UC8 .right.> UCF7
+UC6 .right.> UCF8
+
+UC7 .right.> UCF10
+UC1 .right.> UCF3
+UC1 .right.> UCF6
+
+UComun <|-- UAdmin
+
+UComun -- UC1
+UComun -- UC9
+UComun -- UC3
+UComun -- UC4
+
+UAdmin -- UC5
+UAdmin -- UC6
+UAdmin -- UC7
+UAdmin -- UC8
+
+@enduml

@@ -1,0 +1,49 @@
+@startuml UC_notif_appuser
+left to right direction
+actor "Usuario" as Usuario
+actor "Autorizado" as UComun
+rectangle "Android App" as AA{
+  package "Usuario de App"{
+    usecase "Crear Usuario con \n número de teléfono" as UC1
+  }
+  package "Acceso Rápido"{
+    usecase "Refrescar módulos disponibles \n  para acceso rápido" as UC2
+    usecase "Desbloquear botón contra \n accionamiento accidental" as UC3
+    usecase "Accionar Módulo cercano \n desde acceso rápido" as UC4
+  }
+  
+}
+
+rectangle "Firmware Módulo" as FM {
+    usecase "Ejecutar Comando" as UCF1
+    usecase "Autorización de comandos" as UCF2
+    usecase "Obtener Nivel de Usuario" as UCF3
+    usecase "Accionar" as UCF4
+    usecase "Obtener Estatus" as UCF5
+}
+
+actor "Módulo" as MOD
+
+AA -[hidden]- FM
+
+UCF1 -- MOD
+UCF2 -- MOD
+
+UCF1 .> UCF2
+UCF3 --|> UCF1
+UCF4 --|> UCF1
+UCF5 --|> UCF1
+
+UC4 .right.> UCF3
+UC4 .right.> UCF4
+UC2 .right.> UCF5
+
+Usuario <|-- UComun
+
+Usuario -- UC1
+UComun -- UC2
+UComun -- UC3
+UComun -- UC4
+
+
+@enduml

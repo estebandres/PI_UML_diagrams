@@ -1,0 +1,71 @@
+@startuml AD_request_access
+partition  <b>requestAccess</b> <i>(UUID module_id)</i> {
+    start
+    repeat
+    ::get module object \n from <b>NETWORK SCANN</b>;
+    note left
+        Access request can only be performed on 
+        a live online module object
+    end note 
+    #palegreen: <b>RPC</b> get Create User>
+    if() then (ERROR)
+        #pink : <b>Exception</b> \n Communication Error;
+        (E)
+        detach
+    else
+        #yellow: <b>RESP</b> Create User Result <
+    endif
+    switch()
+        case(\t 200)
+            : Create User Result ]
+            : update user level;
+        case(\t 409 [CONFLICT])   
+            #palegreen: <b>RPC</b> Get User Level >
+            if() then (ERROR)
+                #pink : <b>Exception</b> \n Communication Error;
+                (E)
+                detach
+            else
+                #yellow: <b>RESP</b> User Level <
+                switch()
+                case(\t 200)
+                    : User Level ]
+                    :update user level;
+                    :<b>MAP</b> to Create User Result Object;
+                    :Create User Result ]
+                case(\t 404)
+                : user level = UNAUTHORIZED;
+                #pink : <b>Exception</b> \n User Not Found;
+                stop
+                 endswitch
+                
+            endif
+            
+        case(\t 500)
+            #pink : <b>Exception</b> \n Failed To Write \n User File on Module;
+            (E)
+            note left
+            On very rare occations a module 
+            can fail to write to its ROM memory
+            and a retry may solve the issue
+            end note
+            detach
+        case(\t 412 \n \t [PRECONDITION FAILED])
+            #pink : <b>Exception</b> \n Max Users Quantity \n Reached on Module;
+            stop
+        endswitch
+    :<b>MAP</b> to Use Case Response Object;
+    stop
+
+    (E)
+    note right 
+        A module factory resetting or OTA updating
+        may produce unreachable host or socket timeouts
+    end note
+    repeat while(retry_count < 2) is (YES)
+    -> NO;
+    stop
+
+}
+
+@enduml

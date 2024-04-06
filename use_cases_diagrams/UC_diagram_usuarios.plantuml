@@ -1,0 +1,49 @@
+@startuml UC_usuarios
+left to right direction
+actor "Administrador" as UAdmin
+rectangle "Android App" as AA{
+  package "Gestión de Usuarios del Módulo"{
+    usecase "Listar Usuarios \n del Módulo" as UC1
+    usecase "Eliminar Usuario" as UC2
+    usecase "Crear Usuario" as UC3
+    usecase "Cambiar Nivel de Usuario" as UC4
+  }
+  
+}
+
+rectangle "Firmware Módulo" as FM {
+    usecase "Ejecutar Comando" as UCF1
+    usecase "Cambiar Nivel de Usuario" as UCF3
+    usecase "Crear Usuario Provisorio" as UCF4
+    usecase "Autorización de comandos" as UCF5
+    usecase "Obtener Usuarios" as UCF2
+    usecase "Eliminar Usuario" as UCF6
+
+}
+
+actor "Módulo" as MOD
+
+AA -[hidden]- FM
+
+UCF1 -- MOD
+UCF5 -- MOD
+
+UCF1 .> UCF5
+UCF4 --|> UCF1
+UCF2 --|> UCF1
+UCF6 --|> UCF1
+UCF3 --|> UCF1
+
+UC1 .right.> UCF2
+UC2 .right.> UCF6
+UC3 .right.> UCF4
+UC4 .right.> UCF3
+
+
+UAdmin -- UC1
+
+UAdmin -- UC2
+UAdmin -- UC3
+UAdmin -- UC4
+
+@enduml
