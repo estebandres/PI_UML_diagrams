@@ -1,0 +1,67 @@
+@startuml AD_trigger
+partition  <b>triggerModule</b> <i>(UUID module_id)</i> {
+    start
+    repeat
+    :get module object from <b>LOCAL DB/CACHE</b>;
+    #palegreen: <b>RPC</b> Trigger Module >
+    if() then (ERROR)
+        #pink : <b>Exception</b> \n Communication Error;
+        (R)
+        detach
+    else
+        #yellow: <b>RESP</b> Module Triggered <
+        
+    endif
+    switch()
+        case(\t 200)
+            : Trigger Response]
+        case(\t 401 | 403)
+            : user level = UNAUTHORIZED;
+            #pink : <b>Exception</b> \n User Deleted;
+            stop
+        case(\t 500)
+            
+            : get App User Object;
+            floating note right
+            User Level changed 
+            ========================
+            The user was ADMIN but 
+            now is only AUTHORIZED 
+            and vice versa
+            end note
+            #palegreen: <b>RPC</b> Get User Level >
+            if() then (ERROR)
+                #pink : <b>Exception</b> \n Communication Error;
+                (R)
+                detach
+            else
+                #yellow: <b>RESP</b> User Level <
+            endif
+
+            switch()
+                case(\t 200)
+                    : User Level]
+                    :update user level;
+                    #pink : <b>Exception</b> \n User Level Changed;
+                    (R)
+                    detach
+                case(\t 404 [NOT FOUND])
+                    : user level = UNAUTHORIZED;
+                    #pink : <b>Exception</b> \n User Deleted;
+                    stop
+            endswitch
+    endswitch
+    stop
+
+    (R)
+    note right 
+        A module factory resetting or OTA updating
+        may produce unreachable host or socket timeouts
+    end note
+    repeat while(retry_count < 2) is (YES)
+    -> NO;
+    stop
+
+
+}
+@enduml
