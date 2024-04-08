@@ -2,7 +2,11 @@
 partition  <b>triggerModule</b> <i>(UUID module_id)</i> {
     start
     repeat
-    :get module object from <b>LOCAL DB/CACHE</b>;
+    if(retry) then (YES)
+    :get module object from <b>NETWORK SCANN</b>;
+    else (NO)
+    #lightblue:get module object from <b>LOCAL DB/CACHE</b>;
+    endif
     #palegreen: <b>RPC</b> Trigger Module >
     if() then (ERROR)
         #pink : <b>Exception</b> \n Communication Error;
@@ -55,8 +59,9 @@ partition  <b>triggerModule</b> <i>(UUID module_id)</i> {
 
     (R)
     note right 
-        A module factory resetting or OTA updating
-        may produce unreachable host or socket timeouts
+        A network timeout can be produced 
+        because a module was assinged a different IP address 
+        or is suddenly disconnected.
     end note
     repeat while(retry_count < 2) is (YES)
     -> NO;

@@ -1,0 +1,38 @@
+@startuml AD_trigger
+partition  <b>factoryResetModule</b> <i>(UUID module_id)</i> {
+    start
+    repeat
+    :get module object \n from <b>LOCAL DB/CACHE</b>;
+    #palegreen: <b>RPC</b> Factory Reset Module >
+    note right
+    Only ADMIN level users can
+    request factory reset on module
+    end note
+    if() then (ERROR)
+        #pink : <b>Exception</b> \n Communication Error;
+        (R)
+        detach
+    else
+        #yellow: <b>RESP</b> Factory Reset <
+    endif
+    switch()
+        case(\t 200)
+            : Factory Reset Response]
+        case(\t 401 | 403)
+            #pink : <b>Exception</b> \n User Deleted or Downgraded;
+            stop
+    endswitch
+    :delete module object;
+    stop
+
+    (R)
+    note right 
+        A network timeout can be produced 
+        because a module was assinged a different 
+        IP address or is suddenly disconnected.
+    end note
+    repeat while(retry_count < 2) is (YES)
+    -> NO;
+    stop
+}
+@enduml
