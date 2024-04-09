@@ -60,8 +60,8 @@ partition  <b>triggerModule</b> <i>(UUID module_id)</i> {
     (R)
     note right 
         A network timeout can be produced 
-        because a module was assinged a different IP address 
-        or is suddenly disconnected.
+        because a module was assinged a different 
+        IP address or is suddenly disconnected.
     end note
     repeat while(retry_count < 2) is (YES)
     -> NO;

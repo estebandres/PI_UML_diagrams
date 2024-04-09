@@ -1,0 +1,17 @@
+@startuml
+start
+:A;
+repeat :B
+  if (C) then (yes)
+    :D;
+    break
+  else (no)
+    
+  endif
+    
+  backward :again;
+repeat while (E) is (yes) not (no)
+
+stop
+
+@enduml

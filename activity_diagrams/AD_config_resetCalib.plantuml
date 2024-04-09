@@ -1,0 +1,41 @@
+@startuml AD_ResetCalibration
+partition  <b>ResetModuleCalibration</b> <i>(UUID module_id)</i> {
+    start
+    repeat
+    if(retry) then (YES)
+    :get module object from <b>NETWORK SCANN</b>;
+    else (NO)
+    #lightblue:get module object from <b>LOCAL DB/CACHE</b>;
+    endif
+    #palegreen: <b>RPC</b> Set Module \n Gate Status \n to <b>UNKNOWN</b> >
+    if() then (ERROR)
+        #pink : <b>Exception</b> \n Communication Error;
+        (R)
+        detach
+    else
+        #yellow: <b>RESP</b> Status Changed <
+        
+    endif
+    switch()
+    case(\t 200)
+        : Set Status Response]
+    case(\t 401 | 403)
+        : user level = UNAUTHORIZED;
+        #pink : <b>Exception</b> \n User Deleted;
+        stop
+    endswitch
+
+    :<b>MAP</b> to Use Case Response Object;
+    stop
+
+    (R)
+    note right 
+        A network timeout can be produced 
+        because a module was assinged a different 
+        IP address or is suddenly disconnected.
+    end note
+    repeat while(retry_count < 2) is (YES)
+    -> NO;
+    stop
+}
+@enduml

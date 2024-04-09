@@ -2,7 +2,17 @@
 partition  <b>factoryResetModule</b> <i>(UUID module_id)</i> {
     start
     repeat
-    :get module object \n from <b>LOCAL DB/CACHE</b>;
+    if(retry) then (YES)
+    :get module object from <b>NETWORK SCANN</b>;
+    else (NO)
+    #lightblue:get module object from <b>LOCAL DB/CACHE</b>;
+    note right
+    This use case is executed after 
+    the module object was updated so 
+    it is reasonable to go with the cached object 
+    end note
+    endif
+    
     #palegreen: <b>RPC</b> Factory Reset Module >
     note right
     Only ADMIN level users can

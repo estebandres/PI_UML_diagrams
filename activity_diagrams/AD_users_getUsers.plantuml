@@ -1,5 +1,5 @@
 @startuml AD_getUsers
-partition  <b>getUsers</b> <i>(UUID module_id)</i> {
+partition  <b>getModuleUsers</b> <i>(UUID module_id)</i> {
     start
     :get App User Object;
     #lightblue:get module object \n from <b>LOCAL DB/CACHE</b>;

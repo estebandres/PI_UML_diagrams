@@ -1,0 +1,32 @@
+@startuml AD_getCurrentLocation
+partition  <b>getCurrentLocation</b> () {
+    start
+    repeat:get Current Location;
+    :<b>FILTER</b> null results;
+    if()
+        
+        :Location Object]
+        repeat :get Adress from Location;
+        :<b>FILTER</b> null results;
+        if()
+            :Address Object]
+            :get Address String from \n Address Object;
+            :<b>MAP</b> to Use Case Response Object;
+            stop
+            
+        else
+            #pink : <b>Exception</b> \n No result;
+        endif
+        repeat while(retry_count < 3) is (YES)
+        -> NO;
+        stop
+    else
+        #pink : <b>Exception</b> \n No result;
+    endif
+    repeat while(retry_count < 3) is (YES)
+        -> NO;
+        stop
+    
+   
+}
+@enduml

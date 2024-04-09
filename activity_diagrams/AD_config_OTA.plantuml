@@ -1,0 +1,75 @@
+@startuml AD_UpgradeUModFirmware
+partition  <b>UpgradeUModFirmware</b> <i>(UUID module_id)</i> {
+    :get module object \n from <b>NETWORK SCANN</b>;
+    if(App user is <b>ADMIN</b>) then (YES)
+        : get Firmware file from server;
+        if(Module SW version is unknown) then (TRUE)
+            #pink : <b>Exception</b> \n Installed Firmware \n version unknown;
+            stop
+        elseif(Firmware is up to date) then (TRUE)
+            #pink : <b>Exception</b> \n Upgrade Not Neccessary;
+            stop
+        else 
+            #palegreen: <b>RPC</b> OTA Enable Upgrade >
+            if() then (ERROR)
+                #pink : <b>Exception</b> \n Communication Error;
+                stop
+            else
+                #yellow: <b>RESP</b> Upgrade Enabling finished <
+            endif
+            #Violet:<b>DELAY</b> 500 miliseconds; <<procedure>>
+            #palegreen: Upload Firmware to Module >
+            if() then (ERROR)
+                #pink : <b>Exception</b> \n Communication Error;
+                stop
+            else
+                #yellow: <b>RESP</b> Upload Ended <
+            endif
+            :delete file from phone;
+            switch()
+                case(\t 200)
+                    : File Upload Response]
+                    #Violet:<b>WAIT</b> for 25 seconds; <<procedure>>
+                    #palegreen: <b>RPC</b> Get System Info >
+                    if() then (ERROR)
+                        #pink : <b>Exception</b> \n Communication Error;
+                        stop
+                    else
+                        #yellow: <b>RESP</b> System Info <
+                    endif
+                    :System Info Result]
+                    if(module firmware version was updated) the (YES)
+                        :update module object FW version number;
+                        #palegreen: OTA Upgrade Commit >
+                        if() then (ERROR)
+                            #pink : <b>Exception</b> \n Communication Error;
+                            stop
+                        else
+                            #yellow: <b>RESP</b> Commiting done <
+                            switch()
+                                case(\t 200)
+                                    :<b>MAP</b> to Use Case Response Object;
+                                    stop
+                                case(\t FAILED COMMIT)
+                                    #pink : <b>Exception</b> \n OTA Commit error;
+                                    stop
+                            endswitch
+                        endif
+                    else (NO)
+                        #pink : <b>Exception</b> \n Wrong Version After Upgrade;
+                        stop
+                    endif
+                case(\t UPLOAD FAILED)
+                    #pink : <b>Exception</b> \n Firmware Post Failed;
+                    stop
+            endswitch
+            
+
+        endif
+    else (NO)
+        #pink : <b>Exception</b> \n App User Is Not Admin;
+        stop
+    endif
+
+}
+@enduml
