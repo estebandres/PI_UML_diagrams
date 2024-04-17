@@ -1,0 +1,56 @@
+@startuml CD_units
+
+skinparam linetype polyline
+skinparam linetype ortho
+
+package "Unit" <<Rectangle>>{
+    package "View" <<Rectangle>> #LightCyan {
+        class "UnitActivity" as UA
+        class "AppCompactActivity" as ACA #LightGreen
+        class "UnitFragment" as UF
+        class "Fragment" as F #LightGreen 
+        interface "UnitViewContract" as UVC
+        interface "BaseView" as BV
+        BV : setPresenter()
+
+        BV <|-- UVC
+        F <|-- UF
+        UVC <|-- UF
+        ACA <|-- UA
+        UA *-- UF
+    }
+
+    package "Presenter" <<Rectangle>> #LightPink{
+        interface "UnitPresenterContract" as UPC
+        interface "BasePresenter" as BP
+        class "UnitPresenter" as UP
+        BP : subscribre()
+        BP : unsuscribe()
+
+        BP <|-- UPC
+        UPC <|-- UP
+    }
+
+    package "Model" <<Rectangle>> #LightYellow{
+        abstract "RxUseCase" as RUC
+        'abstract "SimpleUseCase" as SUC
+        'abstract "CompletableUseCase" as CUC
+        class "UnitUseCase_01" as UUC01
+        interface "DataSourceEntity_01" as DSE01
+        class "RepositoryEntity_01" as RE01
+
+        RUC <|-- UUC01
+        DSE01 <|-- RE01
+        UUC01 o-- RE01
+    }
+
+    UP *-- UUC01
+    UA *-- UP
+    UF o-- UP
+    UP o-- UF
+
+
+}
+
+
+@enduml

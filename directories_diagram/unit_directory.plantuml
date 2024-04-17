@@ -1,0 +1,22 @@
+@startfiles unit_directory
+/data/source/
+/data/source/local/
+/data/source/lan/
+/data/source/internet/
+/data/RepositoryEntity01.java
+/data/RepositoryEntity....java
+/data/source/DataSourceEntity01.java
+/data/source/DataSourceEntity....java
+/unit/domain/UnitUseCase01.java
+/unit/domain/UnitUseCase...java
+/unit/UnitActivity.java
+/unit/UnitFragment.java
+/unit/UnitPresenter.java
+/unit/UnitContract.java
+<note>
+The Contract contains both 
+<i>View</i> and <i>Presenter</i> interfaces.
+</note>
+/BaseView.java
+/BasePresenter.java
+@endfiles
