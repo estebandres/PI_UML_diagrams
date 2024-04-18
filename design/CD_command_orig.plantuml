@@ -1,0 +1,25 @@
+@startuml CD_command_orig
+
+title Command Pattern
+
+interface Comando {
+    +Response ejecutar(Request)
+}
+class Cliente{
+    +Receptor receptor
+    +Invocador invocador
+}
+class Receptor{
+    +actuar()
+}
+class Invocador{
+    +Comando comando
+}
+
+class ComandoImpl
+Cliente *--> Invocador
+Invocador *--> Comando
+ComandoImpl ..|> Comando
+ComandoImpl *--> Receptor
+Cliente *--> Receptor
+@enduml

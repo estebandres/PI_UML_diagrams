@@ -1,0 +1,36 @@
+@startuml repository_original
+
+title Repository Pattern - Class Diagram
+
+
+interface IRepositorio << Generic >>{
+    + findById()
+    + findAll()
+    + update()
+    + save()
+}
+interface IRepositorioEntidad{
+    + getEntidadesParticulares()
+}
+abstract RepositorioImpl << Generic >>{
+    - dataSource
+}
+class RepositorioEntidadImpl{
+    - entidadDataSource
+}
+interface IDataSource << Generic >>{
+    + find()
+    + all()
+    + save()
+
+}
+class DataSourceEntidadImpl
+
+DataSourceEntidadImpl ..|> IDataSource
+IRepositorioEntidad ..|> IRepositorio
+RepositorioImpl *-- IDataSource
+RepositorioImpl ..|> IRepositorio
+RepositorioEntidadImpl --|> RepositorioImpl
+RepositorioEntidadImpl ..|> IRepositorioEntidad
+RepositorioEntidadImpl *-- DataSourceEntidadImpl
+@enduml

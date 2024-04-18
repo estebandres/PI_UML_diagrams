@@ -1,0 +1,25 @@
+@startuml repository_less
+
+title Repository Pattern - Class Diagram
+
+
+interface IRepositorio << Generic >>{
+    + findById()
+    + findAll()
+    + update()
+    + save()
+}
+interface IRepositorioEntidad{
+    + getEntidadesParticulares()
+}
+abstract RepositorioImpl << Generic >>{
+}
+note left: Empleando ORM
+class RepositorioEntidadImpl{
+}
+
+IRepositorioEntidad ..|> IRepositorio
+RepositorioImpl ..|> IRepositorio
+RepositorioEntidadImpl --|> RepositorioImpl
+RepositorioEntidadImpl ..|> IRepositorioEntidad
+@enduml

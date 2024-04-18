@@ -1,0 +1,20 @@
+@startuml SD_command_orig
+title Sequence Diagram Command Pattern
+
+participant elCliente
+activate elCliente 
+== Initialization ==
+elCliente -> unReceptor: new Receptor() \t\t\t\t\t
+activate unReceptor
+elCliente -> unComando: new Comando(unReceptor)
+activate unComando
+elCliente -> unInvocador: new Invocador(unComando)
+activate unInvocador
+== Operation ==
+unInvocador -> unComando: execute(Request)
+unComando -> unReceptor: getData(parameters)
+unReceptor --> unComando
+unComando --> unInvocador: Response
+deactivate unComando
+
+@enduml

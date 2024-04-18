@@ -1,0 +1,52 @@
+@startuml CD_command_def_vs_app
+skinparam class {
+    BackgroundColor<<Android>> PaleGreen
+    ArrowColor<<Android>> SeaGreen
+    BorderColor<<Android>> SpringGreen
+}
+package "Pattern Definition" <<Rectangle>> #LightCyan{
+    interface Comando {
+        +Response ejecutar(Request)
+    }
+    class Cliente{
+        +Receptor receptor
+        +Invocador invocador
+    }
+    class Receptor{
+        +actuar()
+    }
+    class Invocador{
+        +Comando comando
+    }
+
+    class ComandoImpl
+    Cliente *--> Invocador
+    Invocador *--> Comando
+    ComandoImpl ..|> Comando
+    ComandoImpl *--> Receptor
+    Cliente *--> Receptor
+}
+
+package "Implementation on App" <<Rectangle>>{
+    interface UseCase {
+        +Response execute(Request)
+    }
+    class Activity <<Android>>{
+        +Repository repo
+        +Presenter presenter
+    }
+    class Repository{
+        +getData()
+        +setData()
+    }
+    class Presenter{
+        +UseCase useCase
+    }
+
+    class UseCaseImpl
+    Activity *--> Presenter
+    Presenter *--> UseCase
+    UseCaseImpl ..|> UseCase
+    UseCaseImpl *--> Repository
+    Activity *--> Repository
+}

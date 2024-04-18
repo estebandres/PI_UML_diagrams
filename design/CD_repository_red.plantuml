@@ -1,0 +1,30 @@
+@startuml reduced_repository
+
+title Repository Pattern \n Simplified Implementation
+
+class RepositorioEntidad{
+    + DataSourceEntidad canalA
+    + DataSourceEntidad canalB
+    + DataSourceEntidad canalC
+}
+rectangle "Data Source Channels"{
+    class CanalAImlp{}
+    class CanalBImlp{}
+    class CanalCImlp{}
+}
+
+interface DataSourceEntidad{
+    + findById()
+    + findAll()
+    + update()
+    + save()
+}
+
+RepositorioEntidad .up.|> DataSourceEntidad
+RepositorioEntidad *-up-> DataSourceEntidad
+DataSourceEntidad <|- CanalAImlp
+DataSourceEntidad <|- CanalBImlp
+DataSourceEntidad <|- CanalCImlp
+CanalAImlp -[hidden]- CanalBImlp
+CanalBImlp -[hidden]- CanalCImlp
+@enduml
