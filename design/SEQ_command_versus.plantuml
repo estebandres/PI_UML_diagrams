@@ -1,4 +1,4 @@
-@startuml SD_command_versus
+@startuml SEQ_command_versus
 skinparam BoxPadding 10
 skinparam ParticipantPadding 10
 

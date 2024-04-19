@@ -1,4 +1,4 @@
-@startuml AD_trigger
+@startuml ACT_factoryResetModule
 partition  <b>factoryResetModule</b> <i>(UUID module_id)</i> {
     start
     repeat

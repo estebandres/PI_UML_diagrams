@@ -1,4 +1,4 @@
-@startuml UC_notif_appuser
+@startuml USE_notif_appuser
 left to right direction
 actor "Usuario" as Usuario
 actor "Autorizado" as UComun

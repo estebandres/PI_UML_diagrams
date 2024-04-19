@@ -1,4 +1,4 @@
-@startuml AD_UpgradeUModFirmware
+@startuml ACT_UpgradeUModFirmware
 partition  <b>UpgradeModuleFirmware</b> <i>(UUID module_id)</i> {
     start
     :get module object \n from <b>NETWORK SCANN</b>;

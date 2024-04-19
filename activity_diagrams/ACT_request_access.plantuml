@@ -1,4 +1,4 @@
-@startuml AD_request_access
+@startuml ACT_requestAccess
 partition  <b>requestAccess</b> <i>(UUID module_id)</i> {
     start
     repeat

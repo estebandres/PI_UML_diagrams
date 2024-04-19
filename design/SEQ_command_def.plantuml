@@ -1,4 +1,4 @@
-@startuml SD_command_def
+@startuml SEQ_command_def
 title Sequence Diagram Command Pattern
 
 participant elCliente

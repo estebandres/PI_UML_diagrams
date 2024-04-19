@@ -1,4 +1,4 @@
-@startuml SD_command_orig_req_resp
+@startuml SEQ_command_def_req_resp
 'title Sequence Diagram Command Pattern
 skinparam BoxPadding 10
 skinparam ParticipantPadding 10

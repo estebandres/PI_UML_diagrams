@@ -1,4 +1,4 @@
-@startuml UC_config
+@startuml USE_config
 left to right direction
 actor "Autorizado" as UComun
 actor "Administrador" as UAdmin

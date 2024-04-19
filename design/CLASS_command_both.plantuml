@@ -1,4 +1,4 @@
-@startuml CD_command_def_vs_app
+@startuml CLASS_command_versus
 skinparam class {
     BackgroundColor<<Android>> PaleGreen
     ArrowColor<<Android>> SeaGreen

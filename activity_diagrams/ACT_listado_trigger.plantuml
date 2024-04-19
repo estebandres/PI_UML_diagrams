@@ -1,4 +1,4 @@
-@startuml AD_trigger
+@startuml ACT_triggerModule
 partition  <b>triggerModule</b> <i>(UUID module_id)</i> {
     start
     repeat

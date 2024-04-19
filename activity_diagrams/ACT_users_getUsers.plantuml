@@ -1,4 +1,4 @@
-@startuml AD_getUsers
+@startuml ACT_getModuleUsers
 partition  <b>getModuleUsers</b> <i>(UUID module_id)</i> {
     start
     :get App User Object;

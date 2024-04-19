@@ -1,4 +1,4 @@
-@startuml CD_command_orig
+@startuml CLASS_command_def
 
 title Command Pattern
 

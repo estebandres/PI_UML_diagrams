@@ -1,4 +1,4 @@
-@startuml reduced_repository
+@startuml CLASS_repository_reduced
 
 title Repository Pattern \n Simplified Implementation
 

@@ -1,4 +1,4 @@
-@startuml Comp_mvp
+@startuml COMP_mvp
 'title Model View Presenter Overview
 frame MVP{
     [presenter] as modsP

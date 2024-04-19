@@ -1,4 +1,4 @@
-@startuml AD_updateUserType
+@startuml ACT_updateUserType
 partition  <b>updateUserType</b> <i>(UUID module_id, String user_phone, UserType user_type)</i> {
     start
     #lightblue:get module object \n from <b>LOCAL DB/CACHE</b>;

@@ -1,4 +1,4 @@
-@startuml AD_DeleteUser
+@startuml ACT_DeleteUser
 partition  <b>DeleteUser</b> <i>(UUID module_id, String user_phone_number)</i> {
     start
     #lightblue:get module object \n from <b>LOCAL DB/CACHE</b>;

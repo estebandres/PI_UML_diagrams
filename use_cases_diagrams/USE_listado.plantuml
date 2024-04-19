@@ -1,4 +1,4 @@
-@startuml UC_lista_modulos
+@startuml USE_lista_modulos
 left to right direction
 actor "Usuario" as Usuario
 actor "Autorizado" as UComun

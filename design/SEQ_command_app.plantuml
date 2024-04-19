@@ -1,4 +1,4 @@
-@startuml SD_command_app
+@startuml SEQ_command_app
 
 skinparam BoxPadding 10
 skinparam ParticipantPadding 10
@@ -35,10 +35,13 @@ aPresenter -> aUseCase: execute(aRequest)
 activate aUseCase
 aUseCase -> aRepository: getData(parameters)
 activate aRepository
-aRepository --> aUseCase
+aRepository -> aRepository
+aRepository --> aUseCase: someData
+deactivate aRepository
+
 aUseCase --> aPresenter: aResponse
 deactivate aUseCase
-deactivate aRepository
+
 deactivate aPresenter
 
 @enduml

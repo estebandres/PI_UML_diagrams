@@ -1,4 +1,4 @@
-@startuml AD_getCurrentLocation
+@startuml ACT_getCurrentLocation
 partition  <b>getCurrentLocation</b> () {
     start
     repeat:get Current Location;

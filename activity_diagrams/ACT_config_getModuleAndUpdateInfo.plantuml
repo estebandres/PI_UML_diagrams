@@ -1,4 +1,4 @@
-@startuml AD_getModuleAndUpdateInfo
+@startuml ACT_getModuleAndUpdateInfo
 
 partition  <b>getModuleAndUpdateInfo</b> <i>(UUID module_id, String WiFi_SSID)</i> {
     start

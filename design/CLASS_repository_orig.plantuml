@@ -1,4 +1,4 @@
-@startuml repository_original
+@startuml CLASS_repository_def
 
 title Repository Pattern - Class Diagram
 

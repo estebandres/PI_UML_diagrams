@@ -1,4 +1,4 @@
-@startuml CD_command_app
+@startuml CLASS_command_app
 
 title Command Pattern on PI
 

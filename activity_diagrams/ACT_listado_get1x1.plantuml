@@ -1,4 +1,4 @@
-@startuml AD_get1x1
+@startuml ACT_getModulesOneByOne
 
 partition  <b>getModulesOneByOne</b> <i>(Boolean forceUpdate, FilterEnum filtering)</i> {
     
