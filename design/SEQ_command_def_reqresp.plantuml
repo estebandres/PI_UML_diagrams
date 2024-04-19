@@ -1,0 +1,34 @@
+@startuml SD_command_orig_req_resp
+'title Sequence Diagram Command Pattern
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+box "Pattern Definition" #LightCyan
+    participant elCliente
+    participant unReceptor
+    participant unComando
+    participant unInvocador
+end box
+
+activate elCliente 
+== Initialization ==
+create unReceptor
+elCliente -> unReceptor: new Receptor() \t\t
+create unComando
+elCliente -> unComando: new Comando(unReceptor)
+create unInvocador
+elCliente -> unInvocador: new Invocador(unComando)
+== Operation ==
+
+unInvocador -> unComando: <b>execute(aRequest)</b>
+activate unInvocador
+activate unComando
+unComando -> unReceptor: action()
+activate unReceptor
+unReceptor -> unReceptor
+unReceptor --> unComando: someResult
+deactivate unReceptor
+unComando --> unInvocador: \t <b>aResponse</b>
+deactivate unComando
+
+@enduml

@@ -1,0 +1,18 @@
+@startuml SEQ_mvp
+'title Sequence of interactions for MVP
+actor "User" as usr
+boundary "View" as view
+control "Presenter" as pres
+entity "Model" as model
+activate view
+activate pres
+usr -> view: User interaction with GUI
+view -> pres: View reports action
+pres -> model: Presenter executes busines logic
+activate model
+model -> pres: Bussnes logic retrieves results
+deactivate model
+pres -> view: Commands changes on view
+view -> usr: Draws changes on screen
+
+@enduml

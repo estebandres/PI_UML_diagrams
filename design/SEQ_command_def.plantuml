@@ -1,4 +1,4 @@
-@startuml SD_command_orig
+@startuml SD_command_def
 title Sequence Diagram Command Pattern
 
 participant elCliente
@@ -11,10 +11,10 @@ activate unComando
 elCliente -> unInvocador: new Invocador(unComando)
 activate unInvocador
 == Operation ==
-unInvocador -> unComando: execute(Request)
-unComando -> unReceptor: getData(parameters)
+unInvocador -> unComando: execute()
+unComando -> unReceptor: action()
 unReceptor --> unComando
-unComando --> unInvocador: Response
+unComando --> unInvocador
 deactivate unComando
 
 @enduml

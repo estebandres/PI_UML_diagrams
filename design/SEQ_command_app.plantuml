@@ -1,24 +1,44 @@
 @startuml SD_command_app
-title Sequence Diagram Command Pattern as Implemented
+
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+'title Sequence Diagram Command Pattern as Implemented
+
 skinparam participant {
     BackgroundColor<<Android>> PaleGreen
     ArrowColor<<Android>> SeaGreen
     BorderColor<<Android>> SpringGreen
 }
-participant anActivity <<Android>>
+
+box "Implementation" #White
+    participant anActivity <<Android>>
+    participant aRepository
+    participant aUseCase
+    participant aPresenter
+end box
+
 activate anActivity 
 == Initialization ==
-anActivity -> aRepository: new Repository() \t\t\t
-activate aRepository
+create aRepository
+anActivity -> aRepository: new Repository() \t\t
+
+create  aUseCase
 anActivity -> aUseCase: new UseCase(aRepository)
-activate aUseCase
+
+create aPresenter
 anActivity -> aPresenter: new Presenter(aUseCase)
-activate aPresenter
+
 == Operation ==
+activate aPresenter
 aPresenter -> aUseCase: execute(aRequest)
+activate aUseCase
 aUseCase -> aRepository: getData(parameters)
+activate aRepository
 aRepository --> aUseCase
 aUseCase --> aPresenter: aResponse
 deactivate aUseCase
+deactivate aRepository
+deactivate aPresenter
 
 @enduml

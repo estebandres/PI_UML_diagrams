@@ -1,0 +1,71 @@
+@startuml SD_command_versus
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+!pragma teoz true
+
+'title Sequence Diagram Command Pattern as Implemented
+skinparam participant {
+    BackgroundColor<<Android>> PaleGreen
+    ArrowColor<<Android>> SeaGreen
+    BorderColor<<Android>> SpringGreen
+}
+
+box "Pattern Definition" #LightCyan
+    participant elCliente
+    participant unReceptor
+    participant unComando
+    participant unInvocador
+end box
+
+box "Implementation" #White
+    participant anActivity <<Android>>
+    participant aRepository
+    participant aUseCase
+    participant aPresenter
+end box
+
+activate elCliente 
+activate anActivity 
+== Initialization ==
+create unReceptor
+elCliente -> unReceptor: new Receptor() \t\t
+create aRepository
+& anActivity -> aRepository: new Repository() \t\t
+
+create unComando
+elCliente -> unComando: new Comando(unReceptor)
+create aUseCase
+& anActivity -> aUseCase: new UseCase(aRepository)
+
+create unInvocador
+elCliente -> unInvocador: new Invocador(unComando)
+create aPresenter
+& anActivity -> aPresenter: new Presenter(aUseCase)
+
+
+== Operation ==
+activate aPresenter
+activate unInvocador
+unInvocador -> unComando: <b>execute(aRequest)</b>
+& aPresenter -> aUseCase: execute(aRequest)
+activate aUseCase
+activate unComando
+unComando -> unReceptor: action()
+& aUseCase -> aRepository: getData(parameters)
+activate unReceptor
+activate aRepository
+unReceptor -> unReceptor
+&aRepository -> aRepository
+unReceptor --> unComando: someResult
+& aRepository --> aUseCase: someData
+deactivate aRepository
+deactivate unReceptor
+unComando --> unInvocador: \t <b>aResponse</b>
+& aUseCase --> aPresenter: aResponse
+deactivate aPresenter
+deactivate unInvocador
+deactivate unComando
+deactivate aUseCase
+
+@enduml

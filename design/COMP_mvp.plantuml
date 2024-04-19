@@ -1,0 +1,18 @@
+@startuml Comp_mvp
+'title Model View Presenter Overview
+frame MVP{
+    [presenter] as modsP
+    [view] as modsV
+    [model] as modsM
+    interface execute as ex
+    modsM -( ex
+    modsP -- ex
+    interface IView as iv
+    interface IPresenter as ip
+    modsP -( iv
+    modsP - ip
+    modsV -left- iv
+    modsV --( ip
+}
+
+@enduml
