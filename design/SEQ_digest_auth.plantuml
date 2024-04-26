@@ -1,0 +1,55 @@
+@startuml SEQ_digest_auth
+skinparam dpi 300
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+!pragma teoz true
+hide footbox
+
+
+participant "App User \n <b>CLIENT</b>" as A
+
+participant "Modulo \n <b>SERVER</b>" as M
+
+
+note over A: ""{"username" = "Esteban","" \n "" "password" = "123456"}""
+
+/ note over M: """users":[{"username" = "Esteban","" \n "" "password" = "123456"},...]""
+
+A -> M: **HTTP GET** /rpc/User.Trigger
+A -[hidden]-> M
+M -> A: **HTTP 401** Unauthorized \n WWW-Authenticate: Digest \n realm = "urbit", \n <font color=darkred> <b>nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093</b></font>"
+note right
+The Server responds with the **Challange**
+to request the client for a digest **response** value
+for credentials verification
+end note
+
+A -[hidden]-> M
+A -> M: **HTTP GET** /rpc/User.Trigger \n Authorization: Digest \n username = "Esteban", \n realm = "urbit", \n <font color=darkred>**nonce = "dcd98b7102dd2f0e8b11d0f600bfb0c093"**</font>, \n uri = "/rpc/User.Trigger", \n nc=00000001, \n <font color=green>**cnonce = "0a4f113b"**</font>, \n <b>response="6629fae49393a05397450978507c4ef1"</b>
+note left
+The Client calculates the response value:
+""**response** = MD5(**HA1**:<font color=darkred>**nonce**</font>:nc:<font color=green>**cnonce**</font>:qop:**H2**)""
+""**HA1** = MD5(username:realm:password)""
+""**HA2** = MD5(method:uri)""
+end note
+M -> A: **HTTP 200** OK \n //. . . RESPONSE . . .//
+note right
+The Server performs the same calculations
+with the credentials stored and obtains
+its **response** value, if it coincides with 
+the client's then the user is autenticated.
+end note
+
+note over A,M
+Subsequent requests by the same Client can be performed using the same 
+Server **nonce** but the Client **counter** and **cnonce** must change to prevent replay attacks.
+end note
+A -[hidden]-> M
+
+A -> M: **HTTP GET** /rpc/User.Trigger \n Authorization: Digest \n username = "Esteban", \n realm = "urbit", \n <font color=darkred>**nonce = "dcd98b7102dd2f0e8b11d0f600bfb0c093"**</font>, \n uri = "/rpc/User.Trigger", \n <font color=purple>**nc=00000002**</font>, \n <font color=cyan>**cnonce = "d832c1f5"**</font>, \n <b>response="8e324829a771a05397450978b4653321"</b>
+
+M -> A: **HTTP 200** OK \n //. . . RESPONSE . . .//
+
+
+@enduml

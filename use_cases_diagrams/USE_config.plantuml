@@ -1,4 +1,5 @@
 @startuml USE_config
+skinparam dpi 300
 left to right direction
 actor "Autorizado" as UComun
 actor "Administrador" as UAdmin

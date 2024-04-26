@@ -1,4 +1,5 @@
 @startuml ACT_getModulesOneByOne
+skinparam dpi 300
 
 partition  <b>getModulesOneByOne</b> <i>(Boolean forceUpdate, FilterEnum filtering)</i> {
     

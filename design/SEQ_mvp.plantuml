@@ -1,4 +1,5 @@
 @startuml SEQ_mvp
+skinparam dpi 300
 'title Sequence of interactions for MVP
 actor "User" as usr
 boundary "View" as view

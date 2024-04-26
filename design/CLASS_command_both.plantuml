@@ -1,4 +1,5 @@
 @startuml CLASS_command_versus
+skinparam dpi 300
 skinparam class {
     BackgroundColor<<Android>> PaleGreen
     ArrowColor<<Android>> SeaGreen

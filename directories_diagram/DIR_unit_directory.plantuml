@@ -1,4 +1,5 @@
-@startfiles unit_directory
+@startfiles DIR_generic_unit
+skinparam dpi 300
 /data/source/
 /data/source/local/
 /data/source/lan/

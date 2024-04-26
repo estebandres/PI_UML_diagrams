@@ -1,4 +1,5 @@
 @startuml SEQ_command_def
+skinparam dpi 300
 title Sequence Diagram Command Pattern
 
 participant elCliente

@@ -1,4 +1,5 @@
 @startuml CLASS_repository_less
+skinparam dpi 300
 
 title Repository Pattern - Class Diagram
 

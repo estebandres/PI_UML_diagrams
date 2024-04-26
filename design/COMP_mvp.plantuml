@@ -1,4 +1,5 @@
 @startuml COMP_mvp
+skinparam dpi 300
 'title Model View Presenter Overview
 frame MVP{
     [presenter] as modsP

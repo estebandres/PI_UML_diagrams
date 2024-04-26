@@ -1,4 +1,5 @@
 @startuml USE_notif_appuser
+skinparam dpi 300
 left to right direction
 actor "Usuario" as Usuario
 actor "Autorizado" as UComun

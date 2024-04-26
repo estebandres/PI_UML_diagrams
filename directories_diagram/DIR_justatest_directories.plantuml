@@ -1,4 +1,5 @@
-@startfiles
+@startfiles DIR_justatest
+skinparam dpi 300
 /.github/
 /src/example.py
 /src/iiimple1.py

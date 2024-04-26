@@ -1,4 +1,5 @@
 @startuml ACT_UpgradeUModFirmware
+skinparam dpi 300
 partition  <b>UpgradeModuleFirmware</b> <i>(UUID module_id)</i> {
     start
     :get module object \n from <b>NETWORK SCANN</b>;

@@ -1,5 +1,5 @@
-@startuml CD_units
-
+@startuml CLASS_units
+skinparam dpi 300
 skinparam linetype polyline
 skinparam linetype ortho
 

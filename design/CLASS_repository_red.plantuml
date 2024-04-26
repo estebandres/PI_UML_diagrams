@@ -1,4 +1,5 @@
 @startuml CLASS_repository_reduced
+skinparam dpi 300
 
 title Repository Pattern \n Simplified Implementation
 
@@ -22,9 +23,9 @@ interface DataSourceEntidad{
 
 RepositorioEntidad .up.|> DataSourceEntidad
 RepositorioEntidad *-up-> DataSourceEntidad
-DataSourceEntidad <|- CanalAImlp
-DataSourceEntidad <|- CanalBImlp
-DataSourceEntidad <|- CanalCImlp
+DataSourceEntidad <|. CanalAImlp
+DataSourceEntidad <|. CanalBImlp
+DataSourceEntidad <|. CanalCImlp
 CanalAImlp -[hidden]- CanalBImlp
 CanalBImlp -[hidden]- CanalCImlp
 @enduml

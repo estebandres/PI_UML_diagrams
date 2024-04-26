@@ -1,4 +1,5 @@
 @startuml USE_usuarios
+skinparam dpi 300
 left to right direction
 actor "Administrador" as UAdmin
 rectangle "Android App" as AA{

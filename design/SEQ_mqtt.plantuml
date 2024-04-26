@@ -1,0 +1,34 @@
+@startuml SEQ_mqtt
+skinparam dpi 300
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+!pragma teoz true
+hide footbox
+
+box "Pattern Definition" #LightCyan
+    participant "Publisher Client" as P
+    participant Broker as B
+    participant "Subscriber Client" as S
+end box
+
+
+P -> B: CONNECT
+B -> P: CONNACK
+
+S -> B: CONNECT
+B -> S: CONNACK
+
+
+S -> B: SUBSCRIBE(Topic = "Topic_1", QoS = 1)
+B -> S: SUBACK(Topic = "Topic_1")
+
+P -> B: PUBLISH(Topic = "Topic_1", QoS = 1, \n PAYLOAD = "Hello")
+B -> P: PUBACK(Topic = "Topic_1", QoS = 1)
+
+B -> S: PUBLISH(Topic = "Topic_1", QoS = 1, \n PAYLOAD = "Hello")
+S -> B: PUBACK(Topic = "Topic_1", QoS = 1)
+
+
+
+@enduml

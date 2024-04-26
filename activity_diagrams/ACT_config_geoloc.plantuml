@@ -1,4 +1,5 @@
 @startuml ACT_getCurrentLocation
+skinparam dpi 300
 partition  <b>getCurrentLocation</b> () {
     start
     repeat:get Current Location;

@@ -1,4 +1,5 @@
 @startuml SEQ_command_def_req_resp
+skinparam dpi 300
 'title Sequence Diagram Command Pattern
 skinparam BoxPadding 10
 skinparam ParticipantPadding 10

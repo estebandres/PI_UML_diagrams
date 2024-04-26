@@ -25,7 +25,32 @@ if [ ! -d "$parent_dir" ]; then
     exit 1
 fi
 
-find "$parent_dir" -type f -name "*.svg" -exec mv -t "$parent_dir" {} +
+find_count=""
+find_count=$(find "$parent_dir" -type f -name "*.png" -exec mv -t "$parent_dir" {} + -print | wc -l)
+
+#echo "COUNTER $find_count"
+
+declare -i counter=0
+
+#cast string type to int
+counter=$((find_count))
+#echo "INTEGER COUNTER= $counter"
+
+echo "FOUND $counter PNG FILES."
+# Check if no files were moved
+if [ $find_count == "" ]; then
+    echo "No PNG files found in $parent_dir directory."
+    exit 0
+fi
+
+
+# Check if no files were moved
+if [ "$counter" -eq 0 ]; then
+    echo "No PNG files found in $parent_dir directory."
+    exit 0
+fi
+
+
 sleep 1
 echo "remove all subfolders."
 

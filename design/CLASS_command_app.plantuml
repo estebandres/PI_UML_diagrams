@@ -1,4 +1,5 @@
 @startuml CLASS_command_app
+skinparam dpi 300
 
 title Command Pattern on PI
 

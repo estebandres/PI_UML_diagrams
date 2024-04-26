@@ -1,4 +1,5 @@
 @startuml ACT_factoryResetModule
+skinparam dpi 300
 partition  <b>factoryResetModule</b> <i>(UUID module_id)</i> {
     start
     repeat

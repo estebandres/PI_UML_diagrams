@@ -1,4 +1,5 @@
 @startuml CLASS_command_def
+skinparam dpi 300
 
 title Command Pattern
 
