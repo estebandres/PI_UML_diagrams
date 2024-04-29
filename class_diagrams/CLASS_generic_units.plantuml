@@ -13,9 +13,9 @@ package "Unit" <<Rectangle>>{
         interface "BaseView" as BV
         BV : setPresenter()
 
-        BV <|-- UVC
+        BV <|.. UVC
         F <|-- UF
-        UVC <|-- UF
+        UVC <|.. UF
         ACA <|-- UA
         UA *-- UF
     }
@@ -27,8 +27,8 @@ package "Unit" <<Rectangle>>{
         BP : subscribre()
         BP : unsuscribe()
 
-        BP <|-- UPC
-        UPC <|-- UP
+        BP <|.. UPC
+        UPC <|.. UP
     }
 
     package "Model" <<Rectangle>> #LightYellow{
@@ -37,11 +37,14 @@ package "Unit" <<Rectangle>>{
         'abstract "CompletableUseCase" as CUC
         class "UnitUseCase_01" as UUC01
         interface "DataSourceEntity_01" as DSE01
+        class "Channel_01_Entity_01" as CE01
         class "RepositoryEntity_01" as RE01
 
-        RUC <|-- UUC01
-        DSE01 <|-- RE01
-        UUC01 o-- RE01
+        RUC <|.. UUC01
+        DSE01 <|.. RE01
+        DSE01 <|.. CE01
+        UUC01 o-left- RE01
+        RE01 o-- CE01
     }
 
     UP *-- UUC01

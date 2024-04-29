@@ -1,0 +1,30 @@
+@startuml SEQ_rpc
+skinparam dpi 300
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+!pragma teoz true
+hide footbox
+
+participant "Aplicación\n <b>CLIENT</b>" as A
+participant "Modulo \n <b>SERVER</b>" as M
+
+activate A
+A -> A: stub_client( <font color=red>**345**</font>, <font color=blue>**"open"**</font>)
+
+A -> M: RPC REQUEST \n ""{"program_identifier" = "urbit","" \n """procedure_code" = 103,"" \n """args" = {"some_int" = <font color=red>**345**</font>, "some_string" = <font color=blue>**"open"**</font>}}""
+activate M
+
+M -> M: stub_server(REQUEST)
+
+M -> M: procedure(<font color=red>**345**</font>,<font color=blue>**"open"**</font>)
+
+'M -[hidden]-> M:
+
+M -> A: RPC RESPONSE \n ""{"status" = 200,"" \n """result" = {"some_float" = 95.2, "some_boolean" = true}}""
+
+
+deactivate M
+deactivate A 
+
+@enduml

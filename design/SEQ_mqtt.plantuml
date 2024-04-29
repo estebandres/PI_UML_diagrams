@@ -6,7 +6,7 @@ skinparam ParticipantPadding 10
 !pragma teoz true
 hide footbox
 
-box "Pattern Definition" #LightCyan
+box "At least Once QoS = 1" #LightCyan
     participant "Publisher Client" as P
     participant Broker as B
     participant "Subscriber Client" as S
@@ -28,6 +28,11 @@ B -> P: PUBACK(Topic = "Topic_1", QoS = 1)
 
 B -> S: PUBLISH(Topic = "Topic_1", QoS = 1, \n PAYLOAD = "Hello")
 S -> B: PUBACK(Topic = "Topic_1", QoS = 1)
+note left
+If this message is lost
+the Broker might atempt 
+to republish
+end note
 
 
 
