@@ -1,0 +1,66 @@
+@startuml CLASS_umod
+
+skinparam dpi 300
+
+enum State{
+    AP_MODE
+    STATION_MODE
+    OTA_UPDATE
+    FACTORY_RESET
+    REBOOTING
+    BLE_MODE
+    UNKNOWN
+}
+
+enum GateStatus{
+    NO_SENSOR
+    DISCONNECTED_SENSOR
+    UNKNOWN
+    CLOSED
+    OPEN
+    CLOSING
+    OPENING
+    PARTIALLY_OPEN
+}
+
+enum Source{
+    CACHE
+    LOCAL_DB
+    BLE_SCAN
+    WEB
+    MQTT_SCAN
+    UNKNOWN
+}
+
+class UMod{
+    - UUID
+    - alias
+    - userLevel
+    - umodState
+    - umodSource
+    - umodStatus
+    - umodLocation
+    - locationAddress
+    - lastUpdate
+    - mqttResponseTopic
+    - macAddress
+    - connectionAddress
+    - wifiSSID
+    - productUUID
+    - hwVersion
+    - swVersion
+    - isOpen
+    - lanOperationEnabled
+    - ongoingNotificationEnabled
+    
+    + getters()
+    + setters()
+    + belongsToAppUser()
+    + canBeTriggeredByAppUser()
+
+}
+
+UMod *-left State
+UMod *-right GateStatus
+UMod *-down- Source
+@enduml

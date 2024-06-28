@@ -1,0 +1,57 @@
+@startuml CLASS_use_cases
+skinparam dpi 300
+
+'title Command Pattern on PI
+
+skinparam class {
+BackgroundColor<<Android>> PaleGreen
+ArrowColor<<Android>> SeaGreen
+BorderColor<<Android>> SpringGreen
+}
+
+abstract RxUseCase <Q extends Request, \n P extends Response>{
+    +Observable<P> buildUseCase(Q request)
+}
+
+interface Request
+interface Response
+
+RxUseCase *-left- Request
+RxUseCase *-left- Response
+
+abstract SimpleUseCase <Q extends Request, \n P extends Response>{
+    # Scheduler proceso
+    # Scheduler resultados
+    # Subscription suscripcion
+    + void execute(Q request, Subscriber<P> suscriptor)
+    + void unsuscribe()
+}
+
+SimpleUseCase *- Request
+SimpleUseCase *- Response
+RxUseCase <|-down- SimpleUseCase 
+
+package "Real Use Cases" <<Rectangle>>{
+    class UseCase01 
+    class UseCase01_Request 
+    class UseCase01_Response
+}
+ 
+
+UseCase01 *-up- UseCase01_Request
+UseCase01 *-down- UseCase01_Response
+
+UseCase01 <|-left- SimpleUseCase
+Request <|.up. UseCase01_Request
+Response <|.up. UseCase01_Response
+
+@enduml
+
+
+
+class UseCaseImpl
+Activity *--> Presenter
+Presenter *--> UseCase
+UseCaseImpl ..|> UseCase
+UseCaseImpl *--> Repository
+Activity *--> Repository

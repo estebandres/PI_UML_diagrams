@@ -1,0 +1,37 @@
+@startuml DFLOW_
+title Overall Data Flow 
+'skinparam ArrowColor<<flow>> #line.dashed:blue;text:Black
+skinparam rectangle {
+BackgroundColor LightBlue
+BorderColor DeepSkyBlue
+}
+
+rectangle "View" as view
+rectangle "Presenter" as pres
+rectangle "Use Case" as ucase
+rectangle "Repositories" as reps
+database "Local" as db
+cloud "Internet" as net
+node "LAN" as lan
+
+view -[hidden]- pres
+pres -[hidden]- ucase
+ucase -[hidden]- reps
+reps -[hidden]- db
+db -[hidden] net
+net -[hidden] lan
+
+view .> pres  : user interaction
+pres .> ucase  : user intent
+ucase .> reps  : data request
+reps .>> db
+reps .>> net
+reps .>> lan
+reps <<. db <<flow>>
+reps <<. net <<flow>>
+reps <<. lan <<flow>>
+reps .> ucase <<flow>> : data result
+ucase .> pres <<flow>> : bussines logic
+pres .> view <<flow>> : changes on GUI
+
+@enduml

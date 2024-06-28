@@ -1,0 +1,27 @@
+@startuml FLOW_clean
+skinparam dpi 300
+'title Layers Information Flow 
+skinparam ArrowColor<<read>> #green
+skinparam ArrowColor<<flow>> #line.dashed:blue;text:Black
+skinparam rectangle {
+BackgroundColor<<Layer>> LightBlue
+BorderColor<<Layer>> DeepSkyBlue
+}
+rectangle "Presentation Layer" <<Layer>> as pres{
+    rectangle "Model View Presenter"
+}
+rectangle "Domain Layer" <<Layer>> as dom{
+    rectangle "Command Pattern"
+}
+rectangle "Data Layer" <<Layer>>  as data{
+    rectangle "Repository Pattern"
+}
+
+pres -[hidden]down- dom
+dom -[hidden]down- data
+
+pres ..>> dom : user demands
+dom ..>> data : data request
+data ..>> dom : data results
+dom ..>> pres : bussines logic 
+@enduml

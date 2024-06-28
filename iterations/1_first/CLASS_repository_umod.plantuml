@@ -1,0 +1,38 @@
+@startuml CLASS_repository_umod
+skinparam dpi 300
+skinparam linetype ortho
+
+'title Repository Pattern \n Simplified Implementation
+
+class UModsRepository{
+    + lanDataSource
+    + localDataSource
+    + internetDataSource
+}
+rectangle "Data Source Channels"{
+    class LocalDataSource{}
+    class LanDataSource{}
+    class InternetDataSource{}
+    'class BluetoothDataSource
+}
+
+interface UModsDataSource{
+    + getUMods()
+    + getUMod(uModUUID)
+    + saveUMod(uMod)
+    + updateUModAlias(uModUUID, newAlias)
+    + void clearAlienUMods()
+    + void refreshUMods()
+    + void deleteAllUMods()
+    + void deleteUMod(uModUUID)
+    + exectute_rpc(umod, requestArguments)
+}
+
+UModsRepository .up.|> UModsDataSource
+UModsRepository *-up-> UModsDataSource
+UModsDataSource <|.right. LanDataSource
+UModsDataSource <|.right. LocalDataSource
+UModsDataSource <|.right. InternetDataSource
+LocalDataSource -[hidden]down- LanDataSource
+LanDataSource -[hidden]down- InternetDataSource
+@enduml

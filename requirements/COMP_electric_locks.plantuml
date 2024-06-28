@@ -1,0 +1,18 @@
+@startuml COMP_electric_locks
+skinparam dpi 300
+
+'title Electric Locks Usual Setup
+component "Botón \n Externo" as button 
+component "Placa de Control \n de Acceso" as board #LightGreen
+component "Cerramiento \n Eléctrico" as lock #LightGray
+component "Solución PI" as sol #LightCyan
+interface "Bornera \n Botón" as bint
+
+
+
+board -down- bint
+button -( bint
+board 0)- lock
+sol -left( bint
+
+@enduml

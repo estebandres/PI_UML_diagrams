@@ -1,5 +1,6 @@
 @startuml CLASS_repository_reduced
 skinparam dpi 300
+skinparam linetype ortho
 
 title Repository Pattern \n Simplified Implementation
 

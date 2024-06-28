@@ -1,0 +1,19 @@
+@startuml CLASS_imagen
+<style>
+classdiagram {
+    linecolor red
+    class {
+        padding 0  <-- doesn't work
+        linecolor green
+        BackgroundColor yellow
+    }
+}
+</style>
+
+skinparam style strictuml
+skinparam padding 0
+hide empty members
+class "<img:logo_ubuntu.png{scale=0.05}>" as c1 
+class "<img:logo_ubuntu.png{scale=0.05}>" as c2
+c1 - c2
+@enduml
